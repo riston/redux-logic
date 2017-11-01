@@ -16,12 +16,12 @@ const middleware = applyMiddleware(
   logicMiddleware
 );
 
-logicMiddleware.monitor$.subscribe(
-  x => {
-    console.log(">", x);
-  },
-  err => console.error(err)
-);
+// logicMiddleware.monitor$.subscribe(
+//   x => {
+//     console.log(">", x);
+//   },
+//   err => console.error(err)
+// );
 
 // using compose to allow for applyMiddleware, just add it in
 const enhancer = (typeof devToolsExtension !== 'undefined') ?

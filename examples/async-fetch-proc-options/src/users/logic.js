@@ -9,11 +9,11 @@ export const usersFetchLogic = createLogic({
   // cancelType: USERS_FETCH_CANCEL,
   // latest: true, // take latest only
 
-  // processOptions: {
-  //   dispatchReturn: true,
-  //   successType: usersFetchFulfilled,
-  //   failType: usersFetchRejected
-  // },
+  processOptions: {
+    dispatchReturn: true,
+    successType: usersFetchFulfilled,
+    failType: usersFetchRejected
+  },
 
   // use axios injected as httpClient from configureStore logic deps
   // we also have access to getState and action in the first argument
@@ -21,16 +21,20 @@ export const usersFetchLogic = createLogic({
   process({ httpClient }) {
     // the delay query param adds arbitrary delay to the response
     return httpClient.get(`https://reqres.in/api/users?delay=${delay}`)
-      .then(resp => resp.data.data); // use data property of payload
+      .then(resp => {
+        console.trace();
+        return resp.data.data;
+      }); // use data property of payload
   }
 });
 
-const logicCount = 170;
+const logicCount = 100;
 const funs = [...Array(logicCount).keys()].map((i) => {
+  console.log("Creating logic ", i);
   return createLogic({
     type: USERS_FETCH_CANCEL,
     process({}, dispatch, done) {
-      console.log("Random logic" + i);
+      console.log("Random logic", i);
       done();
     }
   });
