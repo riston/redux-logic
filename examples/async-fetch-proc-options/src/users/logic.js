@@ -6,14 +6,14 @@ const delay = 4; // 4s delay for interactive use of cancel/take latest
 
 export const usersFetchLogic = createLogic({
   type: USERS_FETCH,
-  cancelType: USERS_FETCH_CANCEL,
-  latest: true, // take latest only
+  // cancelType: USERS_FETCH_CANCEL,
+  // latest: true, // take latest only
 
-  processOptions: {
-    dispatchReturn: true,
-    successType: usersFetchFulfilled,
-    failType: usersFetchRejected
-  },
+  // processOptions: {
+  //   dispatchReturn: true,
+  //   successType: usersFetchFulfilled,
+  //   failType: usersFetchRejected
+  // },
 
   // use axios injected as httpClient from configureStore logic deps
   // we also have access to getState and action in the first argument
@@ -25,6 +25,18 @@ export const usersFetchLogic = createLogic({
   }
 });
 
+const logicCount = 170;
+const funs = [...Array(logicCount).keys()].map((i) => {
+  return createLogic({
+    type: USERS_FETCH_CANCEL,
+    process({}, dispatch, done) {
+      console.log("Random logic" + i);
+      done();
+    }
+  });
+});
+
 export default [
-  usersFetchLogic
+  usersFetchLogic,
+  ...funs,
 ];
